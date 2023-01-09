@@ -73,7 +73,7 @@ The `client_email` defined in the `serviceAccountKey.json`.
 
 Type: `Record<string, string | number | boolean>` | `undefined`
 
-The `client_email` defined in the `serviceAccountKey.json`.
+Optional custom claims to include in the Security Rules `auth / request.auth` variables
 
 ```typescript
 const db = await Firestore.init({
