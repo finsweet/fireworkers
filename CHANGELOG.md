@@ -1,5 +1,11 @@
 # fireworkers
 
+## 0.0.3
+
+### Patch Changes
+
+- 09a0329: docs: fix invalid url
+
 ## 0.0.2
 
 ### Patch Changes
