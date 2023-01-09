@@ -75,6 +75,19 @@ Type: `Record<string, string | number | boolean>` | `undefined`
 
 The `client_email` defined in the `serviceAccountKey.json`.
 
+```typescript
+const db = await Firestore.init({
+  uid: 'user1234',
+  project_id: 'my-project',
+  client_email: 'abc-123@a-b-c-123.iam.gserviceaccount.com',
+  private_key: '-----BEGIN PRIVATE KEY-----...',
+  private_key_id: 'OdxPtETQKf1o2YvMTTLBzsJ3OYdiPcx7NlFE2ZAk',
+  claims: {
+    premium_account: true,
+  },
+});
+```
+
 ### get(db, collection, documentId)
 
 Gets a single document.
