@@ -1,5 +1,12 @@
 # fireworkers
 
+## 0.0.2
+
+### Patch Changes
+
+- 37e4e14: docs: fix example import
+- 02046a6: docs: fix invalid example import (again)
+
 ## 0.0.1
 
 ### Patch Changes
