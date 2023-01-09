@@ -17,7 +17,7 @@ pnpm add fireworkers
 ## Usage
 
 ```typescript
-import * as Firestore from 'fireworker';
+import * as Firestore from 'fireworkers';
 
 const db = await Firestore.init({
   uid: 'user1234',
