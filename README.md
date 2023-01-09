@@ -1,4 +1,4 @@
-# Fireworkers
+# Fireworkers [![npm](https://img.shields.io/npm/v/fireworkers)](https://www.npmjs.com/package/fireworkers)
 
 Work in progress, expect bugs and missing features.
 
