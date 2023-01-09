@@ -69,7 +69,7 @@ Type: `string`
 
 The `client_email` defined in the `serviceAccountKey.json`.
 
-#### options.claims
+#### (Optional) options.claims
 
 Type: `Record<string, string | number | boolean>` | `undefined`
 
