@@ -1,41 +1,15 @@
-/* eslint-disable no-console */
-import esbuild from 'esbuild';
+import { exec } from 'child_process';
+import { build } from 'esbuild';
 
-const buildDirectory = 'dist';
-const production = process.env.NODE_ENV === 'production';
-
-// Config entrypoint files
 const entryPoints = ['src/index.ts'];
 
-/**
- * Default Settings
- * @type {esbuild.BuildOptions}
- */
-const defaultSettings = {
-  bundle: true,
-  outdir: buildDirectory,
-  minify: production,
-  sourcemap: !production,
-  target: production ? 'es2017' : 'esnext',
+build({
   entryPoints,
-};
+  logLevel: 'info',
+  bundle: true,
+  outbase: './src',
+  outdir: './dist',
+  format: 'esm',
+});
 
-// Files building
-if (production) {
-  esbuild.build(defaultSettings);
-}
-
-// Files serving
-else {
-  esbuild
-    .serve(
-      {
-        servedir: buildDirectory,
-        port: 3000,
-      },
-      defaultSettings
-    )
-    .then((server) => {
-      console.log(`Serving at http://localhost:${server.port}`);
-    });
-}
+exec(`tsc --emitDeclarationOnly --declaration --project tsconfig.build.json`);
