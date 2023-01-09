@@ -14,7 +14,8 @@
     "cloudflare",
     "workers",
     "firebase",
-    "firestore"
+    "firestore",
+    "serverless"
   ],
   "author": {
     "name": "Alex Iglesias",
