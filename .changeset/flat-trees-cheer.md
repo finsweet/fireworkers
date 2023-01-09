@@ -1,0 +1,5 @@
+---
+'fireworkers': patch
+---
+
+Initial release

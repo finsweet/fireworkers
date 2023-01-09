@@ -1,27 +1,33 @@
 {
   "name": "fireworkers",
-  "version": "0.0.1",
-  "description": "Developer starter template for Finsweet projects.",
-  "homepage": "https://github.com/finsweet/developer-starter#readme",
-  "license": "ISC",
-  "keywords": [],
-  "author": {
-    "name": "Finsweet",
-    "url": "https://www.finsweet.com/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/finsweet/developer-starter.git"
-  },
-  "bugs": {
-    "url": "https://github.com/finsweet/developer-starter/issues"
-  },
+  "version": "0.0.0",
+  "description": "Use Cloud Firestore inside Cloudflare Workers.",
   "type": "module",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
   "files": [
     "dist"
   ],
+  "license": "MIT",
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "firebase",
+    "firestore"
+  ],
+  "author": {
+    "name": "Alex Iglesias",
+    "url": "https://alexiglesias.me/"
+  },
+  "homepage": "https://github.com/finsweet/fireworkers#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/finsweet/fireworkers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/finsweet/fireworkers/issues"
+  },
   "scripts": {
     "build": "node ./bin/build.js",
     "lint": "eslint --ignore-path .gitignore ./src && prettier --check ./src",
@@ -33,18 +39,18 @@
     "update": "pnpm update -i -L -r"
   },
   "devDependencies": {
-    "@changesets/changelog-git": "^0.1.13",
-    "@changesets/cli": "^2.25.2",
+    "@changesets/changelog-git": "^0.1.14",
+    "@changesets/cli": "^2.26.0",
     "@finsweet/eslint-config": "^2.0.0",
     "@finsweet/tsconfig": "^1.2.0",
-    "@playwright/test": "^1.28.1",
-    "@typescript-eslint/eslint-plugin": "^5.46.1",
-    "@typescript-eslint/parser": "^5.46.1",
+    "@playwright/test": "^1.29.2",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
     "esbuild": "^0.16.16",
-    "eslint": "^8.29.0",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.8.1",
+    "prettier": "^2.8.2",
     "typescript": "^4.9.4"
   },
   "dependencies": {

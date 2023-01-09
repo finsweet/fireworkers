@@ -1,6 +1,6 @@
 # Fireworkers
 
-Work in progress.
+Work in progress, expect bugs and missing features.
 
 A library to use [Cloud Firestore](https://firebase.google.com/docs/firestore) inside [Cloudflare Workers](https://workers.cloudflare.com/).
 
