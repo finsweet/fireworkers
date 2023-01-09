@@ -217,7 +217,7 @@ The DB instance.
 
 Type: `StructuredQuery`
 
-A [StructuredQuery](StructuredQuery) object.
+A [StructuredQuery](https://firebase.google.com/docs/firestore/reference/rest/v1/StructuredQuery) object.
 
 ```typescript
 const todos = await Firestore.query(db, {
