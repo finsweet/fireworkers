@@ -79,10 +79,6 @@ The `client_email` defined in the `serviceAccountKey.json`.
 
 Gets a single document.
 
-```typescript
-const todo = await Firestore.get(db, 'todos', 'aDyjLiTViX1G7HyF74Ax');
-```
-
 #### db
 
 Type: `DB`
@@ -101,16 +97,13 @@ Type: `string`
 
 The document ID.
 
+```typescript
+const todo = await Firestore.get(db, 'todos', 'aDyjLiTViX1G7HyF74Ax');
+```
+
 ### create(db, collection, documentId)
 
 Creates a new document.
-
-```typescript
-const newTodo = await Firestore.create(db, 'todos', {
-  title: 'Win the lottery',
-  completed: false,
-});
-```
 
 #### db
 
@@ -130,15 +123,16 @@ Type: `Record<string, any>`
 
 The document fields.
 
-### update(db, collection, documentId)
-
-Updates or inserts a document.
-
 ```typescript
-const updatedTodo = await Firestore.update(db, 'todos', 'aDyjLiTViX1G7HyF74Ax', {
+const newTodo = await Firestore.create(db, 'todos', {
+  title: 'Win the lottery',
   completed: false,
 });
 ```
+
+### update(db, collection, documentId)
+
+Updates or inserts a document.
 
 #### db
 
@@ -164,13 +158,15 @@ Type: `Record<string, any>`
 
 The fields to update.
 
+```typescript
+const updatedTodo = await Firestore.update(db, 'todos', 'aDyjLiTViX1G7HyF74Ax', {
+  completed: false,
+});
+```
+
 ### remove(db, collection, documentId)
 
 Removes a document.
-
-```typescript
-const todo = await Firestore.remove(db, 'todos', 'aDyjLiTViX1G7HyF74Ax');
-```
 
 #### db
 
@@ -190,9 +186,25 @@ Type: `string`
 
 The document ID.
 
+```typescript
+const todo = await Firestore.remove(db, 'todos', 'aDyjLiTViX1G7HyF74Ax');
+```
+
 ### query(db, collection, documentId)
 
 Runs a query.
+
+#### db
+
+Type: `DB`
+
+The DB instance.
+
+#### query
+
+Type: `StructuredQuery`
+
+A [StructuredQuery](StructuredQuery) object.
 
 ```typescript
 const todos = await Firestore.query(db, {
@@ -211,18 +223,6 @@ const todos = await Firestore.query(db, {
   },
 });
 ```
-
-#### db
-
-Type: `DB`
-
-The DB instance.
-
-#### query
-
-Type: `StructuredQuery`
-
-A [StructuredQuery](StructuredQuery) object.
 
 ## TypeScript
 
