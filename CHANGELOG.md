@@ -1,5 +1,11 @@
 # fireworkers
 
+## 0.1.0
+
+### Minor Changes
+
+- 45ad92f: refactored firestore methods, added support for nested paths
+
 ## 0.0.4
 
 ### Patch Changes
