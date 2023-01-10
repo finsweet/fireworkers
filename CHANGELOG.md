@@ -1,5 +1,11 @@
 # fireworkers
 
+## 0.1.1
+
+### Patch Changes
+
+- 94bf58c: added pkg.exports info
+
 ## 0.1.0
 
 ### Minor Changes
