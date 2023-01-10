@@ -88,6 +88,8 @@ const db = await Firestore.init({
 });
 ```
 
+---
+
 ### get(db, ...document_path)
 
 Gets a single document.
