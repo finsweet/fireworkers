@@ -1,5 +1,11 @@
 # fireworkers
 
+## 0.0.4
+
+### Patch Changes
+
+- 6de0a21: docs: small fixes
+
 ## 0.0.3
 
 ### Patch Changes
