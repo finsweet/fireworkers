@@ -63,17 +63,17 @@ Type: `string`
 
 The `private_key` defined in the `serviceAccountKey.json`.
 
-#### options.client_email
+#### options.private_key_id
 
 Type: `string`
 
-The `client_email` defined in the `serviceAccountKey.json`.
+The `private_key_id` defined in the `serviceAccountKey.json`.
 
 #### (Optional) options.claims
 
 Type: `Record<string, string | number | boolean>` | `undefined`
 
-Optional custom claims to include in the Security Rules `auth / request.auth` variables
+Optional custom claims to include in the [Security Rules](https://firebase.google.com/docs/firestore/security/get-started) `auth / request.auth` variables.
 
 ```typescript
 const db = await Firestore.init({
@@ -88,7 +88,7 @@ const db = await Firestore.init({
 });
 ```
 
-### get(db, collection, documentId)
+### get(db, collection, document)
 
 Gets a single document.
 
@@ -114,7 +114,7 @@ The document ID.
 const todo = await Firestore.get(db, 'todos', 'aDyjLiTViX1G7HyF74Ax');
 ```
 
-### create(db, collection, documentId)
+### create(db, collection, document)
 
 Creates a new document.
 
@@ -143,7 +143,7 @@ const newTodo = await Firestore.create(db, 'todos', {
 });
 ```
 
-### update(db, collection, documentId)
+### update(db, collection, document)
 
 Updates or inserts a document.
 
@@ -177,7 +177,7 @@ const updatedTodo = await Firestore.update(db, 'todos', 'aDyjLiTViX1G7HyF74Ax', 
 });
 ```
 
-### remove(db, collection, documentId)
+### remove(db, collection, document)
 
 Removes a document.
 
@@ -203,7 +203,7 @@ The document ID.
 const todo = await Firestore.remove(db, 'todos', 'aDyjLiTViX1G7HyF74Ax');
 ```
 
-### query(db, collection, documentId)
+### query(db, collection, document)
 
 Runs a query.
 
