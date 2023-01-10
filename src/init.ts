@@ -1,7 +1,7 @@
 import * as jose from 'jose';
 
-import { FIRESTORE_ENDPOINT } from './constants';
 import type * as Firestore from './types';
+import { FIRESTORE_ENDPOINT } from './utils';
 
 const alg = 'RS256';
 const aud = `${FIRESTORE_ENDPOINT}/`;

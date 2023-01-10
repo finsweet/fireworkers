@@ -88,7 +88,7 @@ const db = await Firestore.init({
 });
 ```
 
-### get(db, collection, document)
+### get(db, ...document_path)
 
 Gets a single document.
 
@@ -98,23 +98,29 @@ Type: `DB`
 
 The DB instance.
 
-#### collection
+#### document_path
 
 Type: `string`
 
-The collection ID.
+The document path, usually defined as `{collection_id}/{document_id}`.
 
-#### document
+Allows nested documents like `{collection_id}/{document_id}/{nested_collection_id}/{nested_document_id}`.
 
-Type: `string`
+It can either be defined using a single string like:
 
-The document ID.
+```typescript
+const todo = await Firestore.get(db, 'todos/aDyjLiTViX1G7HyF74Ax');
+```
+
+Or multiple params like:
 
 ```typescript
 const todo = await Firestore.get(db, 'todos', 'aDyjLiTViX1G7HyF74Ax');
 ```
 
-### create(db, collection, document)
+---
+
+### create(db, ...collection_path, fields)
 
 Creates a new document.
 
@@ -124,11 +130,15 @@ Type: `DB`
 
 The DB instance.
 
-#### collection
+#### collection_path
 
 Type: `string`
 
-The collection ID.
+The collection path, usually defined as `{collection_id}`.
+
+Allows nested collections like `{collection_id}/{document_id}/{nested_collection_id}`.
+
+Nested collections can either be defined using a single string like `todo/aDyjLiTViX1G7HyF74Ax/tasks` or by passing multiple params like `'todo', 'aDyjLiTViX1G7HyF74Ax', 'tasks'`.
 
 #### fields
 
@@ -143,7 +153,9 @@ const newTodo = await Firestore.create(db, 'todos', {
 });
 ```
 
-### update(db, collection, document)
+---
+
+### update(db, ...document_path, fields)
 
 Updates or inserts a document.
 
@@ -153,17 +165,11 @@ Type: `DB`
 
 The DB instance.
 
-#### collection
+#### document_path
 
 Type: `string`
 
-The collection ID.
-
-#### document
-
-Type: `string`
-
-The document ID.
+The document path, defined like in [get](#document_path).
 
 #### fields
 
@@ -177,7 +183,9 @@ const updatedTodo = await Firestore.update(db, 'todos', 'aDyjLiTViX1G7HyF74Ax', 
 });
 ```
 
-### remove(db, collection, document)
+---
+
+### remove(db, ...document_path)
 
 Removes a document.
 
@@ -187,23 +195,19 @@ Type: `DB`
 
 The DB instance.
 
-#### collection
+#### document_path
 
 Type: `string`
 
-The collection ID.
-
-#### document
-
-Type: `string`
-
-The document ID.
+The document path, defined like in [get](#document_path).
 
 ```typescript
 const todo = await Firestore.remove(db, 'todos', 'aDyjLiTViX1G7HyF74Ax');
 ```
 
-### query(db, collection, document)
+---
+
+### query(db, query)
 
 Runs a query.
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FIRESTORE_ENDPOINT } from './constants';
 import { extract_fields_from_document } from './fields';
 import type * as Firestore from './types';
+import { get_firestore_endpoint } from './utils';
 
 type RunQueryRequest = {
   parent?: string;
@@ -22,27 +22,25 @@ type RunQueryResponse = Array<{
  * Performs a query to Firestore.
  * Reference: {@link https://firebase.google.com/docs/firestore/reference/rest/v1/projects.databases.documents/runQuery}
  *
- * @param firestore
- * @param query
+ * @param firestore The DB instance.
+ * @param query A [StructuredQuery](https://firebase.google.com/docs/firestore/reference/rest/v1/StructuredQuery) object.
  */
 export const query = async <Fields extends Record<string, any>>(
   { jwt, project_id }: Firestore.DB,
   query: Firestore.StructuredQuery
 ) => {
+  const endpoint = get_firestore_endpoint(project_id);
   const payload: RunQueryRequest = {
     structuredQuery: query,
   };
 
-  const response = await fetch(
-    `${FIRESTORE_ENDPOINT}/v1/projects/${project_id}/databases/(default)/documents:runQuery`,
-    {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
-    }
-  );
+  const response = await fetch(`${endpoint}:runQuery`, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
 
   const data: RunQueryResponse = await response.json();
 
