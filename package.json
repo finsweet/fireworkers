@@ -3,13 +3,12 @@
   "version": "0.1.0",
   "description": "Use Cloud Firestore inside Cloudflare Workers.",
   "type": "module",
-  "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/types/index.d.ts"
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js"
     }
   },
   "files": [
