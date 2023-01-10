@@ -1,6 +1,13 @@
 import { is, validate } from 'superstruct';
 
-import { geo_point_schema, object_schema, timestamp_schema } from './schemas';
+import {
+  boolean_schema,
+  geo_point_schema,
+  number_schema,
+  object_schema,
+  string_schema,
+  timestamp_schema,
+} from './schemas';
 import type * as Firestore from './types';
 
 /**
@@ -48,9 +55,9 @@ const convert_field_to_value = (field_value: unknown): Firestore.Value => {
 
   // Primitives
   if (is(field_value, timestamp_schema)) return { timestampValue: field_value };
-  if (typeof field_value === 'boolean') return { booleanValue: field_value };
-  if (typeof field_value === 'number') return { integerValue: field_value };
-  if (typeof field_value === 'string') return { stringValue: field_value };
+  if (is(field_value, boolean_schema)) return { booleanValue: field_value };
+  if (is(field_value, number_schema)) return { integerValue: field_value };
+  if (is(field_value, string_schema)) return { stringValue: field_value };
   return { nullValue: 'NULL_VALUE' };
 };
 
