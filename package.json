@@ -1,6 +1,6 @@
 {
   "name": "fireworkers",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Use Cloud Firestore inside Cloudflare Workers.",
   "type": "module",
   "main": "dist/index.js",
