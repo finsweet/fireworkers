@@ -4,7 +4,6 @@ specifiers:
   '@changesets/changelog-git': ^0.1.14
   '@changesets/cli': ^2.26.0
   '@finsweet/eslint-config': ^2.0.0
-  '@finsweet/tsconfig': ^1.2.0
   '@playwright/test': ^1.29.2
   '@typescript-eslint/eslint-plugin': ^5.48.1
   '@typescript-eslint/parser': ^5.48.1
@@ -25,7 +24,6 @@ devDependencies:
   '@changesets/changelog-git': 0.1.14
   '@changesets/cli': 2.26.0
   '@finsweet/eslint-config': 2.0.0_puoiliissvzurc6i5kvdxsghbu
-  '@finsweet/tsconfig': 1.2.0
   '@playwright/test': 1.29.2
   '@typescript-eslint/eslint-plugin': 5.48.1_3jon24igvnqaqexgwtxk6nkpse
   '@typescript-eslint/parser': 5.48.1_iukboom6ndih5an6iafl45j2fe
@@ -485,10 +483,6 @@ packages:
       eslint-plugin-simple-import-sort: 8.0.0_eslint@8.31.0
       prettier: 2.8.2
       typescript: 4.9.4
-    dev: true
-
-  /@finsweet/tsconfig/1.2.0:
-    resolution: {integrity: sha512-Wq9Pz1Z/8aWLmJPms/P37kYQrAh1iNpHv0MMrekYitmuJ6MMFjhROQaZI+JfJkXicqng7vZHCrF0C+SN55be2Q==}
     dev: true
 
   /@humanwhocodes/config-array/0.11.8:
