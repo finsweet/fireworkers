@@ -8,7 +8,7 @@ import { get_firestore_endpoint } from './utils';
  * Reference: {@link https://firebase.google.com/docs/firestore/reference/rest/v1/projects.databases.documents/createDocument}
  *
  * @param firestore
- * @param document_path
+ * @param collection_path
  * @param fields
  */
 export const create = async <Fields extends Record<string, any>>(

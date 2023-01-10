@@ -6,7 +6,7 @@ import { get_firestore_endpoint } from './utils';
  * Reference: {@link https://firebase.google.com/docs/firestore/reference/rest/v1/projects.databases.documents/delete}
  *
  * @param firestore The DB instance.
- * @param args The document path.
+ * @param document_path The document path.
  *
  * @returns `true` if the deletion was successful.
  */
