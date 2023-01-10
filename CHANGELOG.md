@@ -1,5 +1,11 @@
 # fireworkers
 
+## 0.1.2
+
+### Patch Changes
+
+- f2846f9: set pkg.sideEffects to false
+
 ## 0.1.1
 
 ### Patch Changes
