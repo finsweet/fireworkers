@@ -27,14 +27,16 @@ type RunQueryResponse = Array<{
  */
 export const query = async <Fields extends Record<string, any>>(
   { jwt, project_id }: Firestore.DB,
-  query: Firestore.StructuredQuery
+  query: Firestore.StructuredQuery,
+  ...args: string[]
 ) => {
   const endpoint = get_firestore_endpoint(project_id);
+  const document_path = args.length === 0 ? '' : '/' + args.join('/');
   const payload: RunQueryRequest = {
     structuredQuery: query,
   };
 
-  const response = await fetch(`${endpoint}:runQuery`, {
+  const response = await fetch(`${endpoint}${document_path}:runQuery`, {
     method: 'POST',
     body: JSON.stringify(payload),
     headers: {
