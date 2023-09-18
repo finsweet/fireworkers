@@ -1,5 +1,12 @@
 # fireworkers
 
+## 0.2.0
+
+### Minor Changes
+
+- e6a9bf5: - added support for querying sub-collections
+  - (internal) refactored endpoints constructor
+
 ## 0.1.2
 
 ### Patch Changes
