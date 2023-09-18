@@ -12,12 +12,11 @@ import { get_firestore_endpoint } from './utils';
  */
 export const get = async <Fields extends Record<string, any>>(
   { jwt, project_id }: Firestore.DB,
-  ...args: string[]
+  ...paths: string[]
 ) => {
-  const endpoint = get_firestore_endpoint(project_id);
-  const document_path = args.join('/');
+  const endpoint = get_firestore_endpoint(project_id, paths);
 
-  const response = await fetch(`${endpoint}/${document_path}`, {
+  const response = await fetch(endpoint, {
     headers: {
       Authorization: `Bearer ${jwt}`,
     },

@@ -15,13 +15,13 @@ export const update = async <Fields extends Record<string, any>>(
   { jwt, project_id }: Firestore.DB,
   ...args: [...string[], Fields]
 ) => {
-  const endpoint = get_firestore_endpoint(project_id);
-  const collection_path = (args.slice(0, -1) as string[]).join('/');
-
+  const paths = args.slice(0, -1) as string[];
   const fields = args.at(-1) as Fields;
+
+  const endpoint = get_firestore_endpoint(project_id, paths);
   const payload = create_document_from_fields(fields);
 
-  const response = await fetch(`${endpoint}/${collection_path}`, {
+  const response = await fetch(endpoint, {
     method: 'PATCH',
     body: JSON.stringify(payload),
     headers: {
