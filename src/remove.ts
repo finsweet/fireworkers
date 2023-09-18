@@ -10,11 +10,10 @@ import { get_firestore_endpoint } from './utils';
  *
  * @returns `true` if the deletion was successful.
  */
-export const remove = async ({ jwt, project_id }: Firestore.DB, ...args: string[]) => {
-  const endpoint = get_firestore_endpoint(project_id);
-  const document_path = args.join('/');
+export const remove = async ({ jwt, project_id }: Firestore.DB, ...paths: string[]) => {
+  const endpoint = get_firestore_endpoint(project_id, paths);
 
-  const response = await fetch(`${endpoint}/${document_path}`, {
+  const response = await fetch(endpoint, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${jwt}`,
