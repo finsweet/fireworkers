@@ -1,5 +1,11 @@
 # fireworkers
 
+## 0.2.1
+
+### Patch Changes
+
+- 395d097: fix: wrong firestore endpoint URL constructor
+
 ## 0.2.0
 
 ### Minor Changes
