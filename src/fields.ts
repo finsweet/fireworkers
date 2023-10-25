@@ -56,7 +56,7 @@ const convert_field_to_value = (field_value: unknown): Firestore.Value => {
   // Primitives
   if (is(field_value, timestamp_schema)) return { timestampValue: field_value };
   if (is(field_value, boolean_schema)) return { booleanValue: field_value };
-  if (is(field_value, number_schema)) return { integerValue: field_value };
+  if (is(field_value, number_schema)) return { doubleValue: field_value };
   if (is(field_value, string_schema)) return { stringValue: field_value };
   return { nullValue: 'NULL_VALUE' };
 };
