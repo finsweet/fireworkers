@@ -220,7 +220,7 @@ Type: `boolean`
 If set to `true`, the provided data will be merged into an existing document instead of overwriting.
 
 ```typescript
-const updatedTodo = await Firestore.update(
+const updatedTodo = await Firestore.set(
   db,
   'todos',
   'aDyjLiTViX1G7HyF74Ax',
