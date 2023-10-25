@@ -159,7 +159,9 @@ const newTodo = await Firestore.create(db, 'todos', {
 
 ### update(db, ...document_path, fields)
 
-Updates or inserts a document.
+Updates fields in a document. The update will fail if applied to a document that does not exist.
+
+Implements the same functionality as Firestore's [updateDoc](https://firebase.google.com/docs/reference/js/firestore_.md#updatedoc).
 
 #### db
 
@@ -183,6 +185,48 @@ The fields to update.
 const updatedTodo = await Firestore.update(db, 'todos', 'aDyjLiTViX1G7HyF74Ax', {
   completed: false,
 });
+```
+
+---
+
+### set(db, ...document_path, fields, options?)
+
+Writes to a document. If the document does not yet exist, it will be created. If you provide `merge`, the provided data can be merged into an existing document.
+
+Implements the same functionality as Firestore's [setDoc](https://firebase.google.com/docs/reference/js/firestore_.md#setdoc_2).
+
+#### db
+
+Type: `DB`
+
+The DB instance.
+
+#### document_path
+
+Type: `string`
+
+The document path, defined like in [get](#document_path).
+
+#### fields
+
+Type: `Record<string, any>`
+
+The fields to update.
+
+#### (Optional) options.merge
+
+Type: `boolean`
+
+If set to `true`, the provided data will be merged into an existing document instead of overwriting.
+
+```typescript
+const updatedTodo = await Firestore.update(
+  db,
+  'todos',
+  'aDyjLiTViX1G7HyF74Ax',
+  { completed: false },
+  { merge: true }
+);
 ```
 
 ---
