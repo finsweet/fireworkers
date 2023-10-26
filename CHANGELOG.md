@@ -1,5 +1,11 @@
 # fireworkers
 
+## 0.3.1
+
+### Patch Changes
+
+- b157152: fix: expose `Fireworkers.set` method
+
 ## 0.3.0
 
 ### Minor Changes
