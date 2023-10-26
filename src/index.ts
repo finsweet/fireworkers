@@ -5,3 +5,4 @@ export * from './query';
 export * from './remove';
 export type { DB } from './types';
 export * from './update';
+export * from './set';
