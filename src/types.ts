@@ -71,7 +71,7 @@ interface CompositeFilter {
   filters?: Filter[];
 }
 
-type CompositeFilterOp = 'OPERATOR_UNSPECIFIED' | 'AND';
+type CompositeFilterOp = 'OPERATOR_UNSPECIFIED' | 'AND' | 'OR';
 
 interface FieldFilter {
   field?: FieldReference;
