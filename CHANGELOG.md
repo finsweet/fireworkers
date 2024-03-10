@@ -1,5 +1,11 @@
 # fireworkers
 
+## 0.3.2
+
+### Patch Changes
+
+- a664a3e: fix: include missing `OR` operator for structured queries.
+
 ## 0.3.1
 
 ### Patch Changes
