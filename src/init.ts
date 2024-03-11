@@ -1,9 +1,9 @@
-import * as jose from 'jose';
+import { sign } from '@tsndr/cloudflare-worker-jwt';
 
 import type * as Firestore from './types';
 import { FIRESTORE_ENDPOINT } from './utils';
 
-const alg = 'RS256';
+const algorithm = 'RS256';
 const aud = `${FIRESTORE_ENDPOINT}/`;
 
 /**
@@ -27,19 +27,20 @@ export const init = async ({
   uid: string;
   claims?: Record<string, string>;
 }): Promise<Firestore.DB> => {
-  const sign_key = await jose.importPKCS8(private_key.replace(/\\n/g, '\n'), alg);
-
-  const jwt = await new jose.SignJWT({
-    aud,
-    uid,
-    claims,
-    sub: client_email,
-    iss: client_email,
-  })
-    .setProtectedHeader({ alg, kid: private_key_id })
-    .setIssuedAt()
-    .setExpirationTime('1h')
-    .sign(sign_key);
+  const jwt = await sign(
+    {
+      aud,
+      uid,
+      claims,
+      sub: client_email,
+      iss: client_email,
+      iat: Math.floor(Date.now() / 1000),
+      exp: Math.floor(Date.now() / 1000) + 3600,
+      ...claims,
+    },
+    private_key,
+    { algorithm, header: { kid: private_key_id } }
+  );
 
   return {
     project_id,
