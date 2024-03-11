@@ -1,5 +1,11 @@
 # fireworkers
 
+## 0.4.0
+
+### Minor Changes
+
+- 013e768: feat: export all types
+
 ## 0.3.2
 
 ### Patch Changes
