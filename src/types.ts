@@ -47,39 +47,39 @@ export interface StructuredQuery {
   limit?: number | { value: number };
 }
 
-interface Projection {
+export interface Projection {
   fields?: FieldReference[];
 }
 
-interface FieldReference {
+export interface FieldReference {
   fieldPath?: string;
 }
 
-interface CollectionSelector {
+export interface CollectionSelector {
   collectionId?: string;
   allDescendants?: boolean;
 }
 
-interface Filter {
+export interface Filter {
   compositeFilter?: CompositeFilter;
   fieldFilter?: FieldFilter;
   unaryFilter?: UnaryFilter;
 }
 
-interface CompositeFilter {
+export interface CompositeFilter {
   op?: CompositeFilterOp;
   filters?: Filter[];
 }
 
-type CompositeFilterOp = 'OPERATOR_UNSPECIFIED' | 'AND' | 'OR';
+export type CompositeFilterOp = 'OPERATOR_UNSPECIFIED' | 'AND' | 'OR';
 
-interface FieldFilter {
+export interface FieldFilter {
   field?: FieldReference;
   op?: FieldFilterOp;
   value?: Value;
 }
 
-type FieldFilterOp =
+export type FieldFilterOp =
   | 'OPERATOR_UNSPECIFIED'
   | 'LESS_THAN'
   | 'LESS_THAN_OR_EQUAL'
@@ -92,60 +92,65 @@ type FieldFilterOp =
   | 'ARRAY_CONTAINS_ANY'
   | 'NOT_IN';
 
-type ValueNullValue = 'NULL_VALUE';
+export type ValueNullValue = 'NULL_VALUE';
 
 export type Timestamp = string | { seconds?: string | number; nanos?: number };
 
-interface LatLng {
+export interface LatLng {
   latitude?: number;
   longitude?: number;
 }
 
-interface ArrayValue {
+export interface ArrayValue {
   values?: Value[];
 }
 
-interface MapValue {
+export interface MapValue {
   fields?: ApiClientObjectMap<Value>;
 }
 
-interface ApiClientObjectMap<T> {
+export interface ApiClientObjectMap<T> {
   [k: string]: T;
 }
 
-interface Order {
+export interface Order {
   field?: FieldReference;
   direction?: OrderDirection;
 }
 
-type OrderDirection = 'DIRECTION_UNSPECIFIED' | 'ASCENDING' | 'DESCENDING';
+export type OrderDirection = 'DIRECTION_UNSPECIFIED' | 'ASCENDING' | 'DESCENDING';
 
-interface Cursor {
+export interface Cursor {
   values?: Value[];
   before?: boolean;
 }
 
-interface UnaryFilter {
+export interface UnaryFilter {
   op?: UnaryFilterOp;
   field?: FieldReference;
 }
 
-type UnaryFilterOp = 'OPERATOR_UNSPECIFIED' | 'IS_NAN' | 'IS_NULL' | 'IS_NOT_NAN' | 'IS_NOT_NULL';
+export type UnaryFilterOp =
+  | 'OPERATOR_UNSPECIFIED'
+  | 'IS_NAN'
+  | 'IS_NULL'
+  | 'IS_NOT_NAN'
+  | 'IS_NOT_NULL';
 
 export interface TransactionOptions {
   readOnly?: ReadOnly;
   readWrite?: ReadWrite;
 }
 
-interface ReadOnly {
+export interface ReadOnly {
   readTime?: string;
 }
 
-interface ReadWrite {
+export interface ReadWrite {
   retryTransaction?: string;
 }
 
-interface Status {
+export interface Status {
   code?: number;
   message?: string;
   status?: string;
