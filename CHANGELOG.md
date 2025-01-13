@@ -1,5 +1,11 @@
 # fireworkers
 
+## 0.4.1
+
+### Patch Changes
+
+- c942c2b: fix: remove global flag on timestamp regex
+
 ## 0.4.0
 
 ### Minor Changes
