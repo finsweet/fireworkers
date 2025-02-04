@@ -14,6 +14,7 @@ export const get_firestore_endpoint = (
   const allPaths = ['v1', 'projects', project_id, 'databases', '(default)', 'documents', ...paths];
   const path = allPaths.join('/') + suffix;
 
-  const endpoint = new URL(path, FIRESTORE_ENDPOINT);
+  const endpoint = new URL(FIRESTORE_ENDPOINT);
+  endpoint.pathname = path;
   return endpoint;
 };
