@@ -1,5 +1,12 @@
 # fireworkers
 
+## 0.4.2
+
+### Patch Changes
+
+- 87a9436: chore: updated dependencies
+- e7a065c: fix: support document IDs that contain hashes
+
 ## 0.4.1
 
 ### Patch Changes
