@@ -287,6 +287,85 @@ const todos = await Firestore.query(db, {
 });
 ```
 
+### batch(db)
+
+Creates a write batch, used for performing multiple writes as a single atomic unit.
+
+Implements the same functionality as Firestore's [writeBatch](https://firebase.google.com/docs/reference/js/firestore_.md#writebatch).
+
+#### db
+
+Type: `DB`
+
+The DB instance.
+
+#### batch.set(paths, fields, options?)
+
+Adds a set operation to the batch. If the document does not yet exist, it will be created. If you provide `merge: true`, the provided fields will be merged into the existing document.
+
+- `paths` — Type: `string[]` — The path segments to the document (e.g. `['todos', 'my-id']`).
+- `fields` — Type: `Record<string, any>` — The fields to write.
+- `options.merge` — Type: `boolean` (optional) — If `true`, merges into an existing document.
+
+#### batch.update(paths, fields)
+
+Adds an update operation to the batch. The document must already exist.
+
+- `paths` — Type: `string[]` — The path segments to the document.
+- `fields` — Type: `Record<string, any>` — The fields to update.
+
+#### batch.delete(paths)
+
+Adds a delete operation to the batch.
+
+- `paths` — Type: `string[]` — The path segments to the document.
+
+#### batch.commit()
+
+Commits all of the writes in this write batch as a single atomic unit. Returns a `CommitResponse` with `writeResults` and `commitTime`.
+
+A batch can only be committed once. After `commit()` is called, any further calls to `set`, `update`, `delete`, or `commit` will throw an error.
+
+```typescript
+const b = Firestore.batch(db);
+
+b.set(['todos', 'todo-1'], { title: 'First', completed: false });
+b.set(['todos', 'todo-2'], { title: 'Second', completed: true });
+b.update(['todos', 'existing-id'], { completed: true });
+b.delete(['todos', 'old-id']);
+
+const response = await b.commit();
+```
+
+---
+
+## Testing
+
+Unit tests run against the [Firebase Emulator Suite](https://firebase.google.com/docs/emulator-suite) using [Vitest](https://vitest.dev/).
+
+### Prerequisites
+
+- [Java](https://www.java.com/) (required by the Firebase Emulator)
+- [Firebase CLI](https://firebase.google.com/docs/cli) (installed as a dev dependency)
+
+### Running tests
+
+Run the full test suite (starts the emulator automatically):
+
+```bash
+pnpm test:unit
+```
+
+Run tests in watch mode (requires the emulator to be running separately):
+
+```bash
+# Terminal 1 — start the emulator
+pnpm emulators
+
+# Terminal 2 — run tests in watch mode
+pnpm test:unit:watch
+```
+
 ## TypeScript
 
 This library has first-class TypeScript support.

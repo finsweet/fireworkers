@@ -43,10 +43,15 @@
     "format": "prettier --write ./src",
     "test": "pnpm playwright test",
     "test:headed": "pnpm playwright test --headed",
+    "test:unit": "firebase emulators:exec --only firestore --project test-project 'vitest run'",
+    "test:unit:watch": "vitest",
+    "emulators": "firebase emulators:start --only firestore --project test-project",
     "release": "changeset publish",
     "update": "pnpm update -i -L -r"
   },
   "devDependencies": {
+    "firebase-tools": "15.15.0",
+    "vitest": "3.0.0",
     "@changesets/changelog-git": "^0.2.0",
     "@changesets/cli": "^2.27.12",
     "@eslint/js": "^9.19.0",

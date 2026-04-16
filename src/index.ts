@@ -1,3 +1,4 @@
+export * from './batch';
 export * from './create';
 export * from './get';
 export * from './init';
