@@ -1,13 +1,19 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-import { clearFirestore, db } from '../tests/unit/helpers';
+import { clearFirestore, initDb } from '../tests/unit/helpers';
 import { create } from './create';
 import { get } from './get';
+import type { DB } from './types';
 import { update } from './update';
 
 type Todo = { title: string; completed: boolean; priority?: number };
 
+let db: DB;
+
 describe('update', () => {
+  beforeAll(async () => {
+    db = await initDb();
+  });
   beforeEach(clearFirestore);
 
   it('updates specified fields without overwriting others', async () => {

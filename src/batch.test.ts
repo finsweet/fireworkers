@@ -1,12 +1,18 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-import { clearFirestore, db } from '../tests/unit/helpers';
+import { clearFirestore, initDb } from '../tests/unit/helpers';
 import { batch } from './batch';
 import { get } from './get';
+import type { DB } from './types';
 
 type Todo = { title: string; completed: boolean };
 
+let db: DB;
+
 describe('batch', () => {
+  beforeAll(async () => {
+    db = await initDb();
+  });
   beforeEach(clearFirestore);
 
   it('commits a set operation and the document becomes retrievable', async () => {

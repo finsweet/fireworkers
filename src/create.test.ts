@@ -1,9 +1,15 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-import { clearFirestore, db } from '../tests/unit/helpers';
+import { clearFirestore, initDb } from '../tests/unit/helpers';
 import { create } from './create';
+import type { DB } from './types';
+
+let db: DB;
 
 describe('create', () => {
+  beforeAll(async () => {
+    db = await initDb();
+  });
   beforeEach(clearFirestore);
 
   it('returns the created document with a generated id', async () => {

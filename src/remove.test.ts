@@ -1,11 +1,17 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-import { clearFirestore, db } from '../tests/unit/helpers';
+import { clearFirestore, initDb } from '../tests/unit/helpers';
 import { create } from './create';
 import { get } from './get';
 import { remove } from './remove';
+import type { DB } from './types';
+
+let db: DB;
 
 describe('remove', () => {
+  beforeAll(async () => {
+    db = await initDb();
+  });
   beforeEach(clearFirestore);
 
   it('removes an existing document and returns true', async () => {

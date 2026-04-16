@@ -1,12 +1,18 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-import { clearFirestore, db } from '../tests/unit/helpers';
+import { clearFirestore, initDb } from '../tests/unit/helpers';
 import { create } from './create';
 import { query } from './query';
+import type { DB } from './types';
 
 type Todo = { title: string; completed: boolean; owner: string };
 
+let db: DB;
+
 describe('query', () => {
+  beforeAll(async () => {
+    db = await initDb();
+  });
   beforeEach(clearFirestore);
 
   it('returns documents matching a field filter', async () => {

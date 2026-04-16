@@ -1,12 +1,18 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-import { clearFirestore, db } from '../tests/unit/helpers';
+import { clearFirestore, initDb } from '../tests/unit/helpers';
 import { get } from './get';
 import { set } from './set';
+import type { DB } from './types';
 
 type Todo = { title: string; completed: boolean; priority?: number };
 
+let db: DB;
+
 describe('set', () => {
+  beforeAll(async () => {
+    db = await initDb();
+  });
   beforeEach(clearFirestore);
 
   it('creates a document with a known id when it does not exist', async () => {

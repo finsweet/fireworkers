@@ -10,5 +10,8 @@ export default defineConfig({
     },
     // Allow time for emulator round-trips
     testTimeout: 15000,
+    // All test files share a single Firestore emulator — run them sequentially
+    // to prevent clearFirestore() in one file from wiping another file's data.
+    fileParallelism: false,
   },
 });
