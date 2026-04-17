@@ -121,6 +121,53 @@ describe('batch', () => {
     await expect(b.commit()).rejects.toThrow();
   });
 
+  it('rejects a second commit() started while the first is in-flight', async () => {
+    const b = batch(db);
+    b.set(['todos', 'concurrent-commit'], { title: 'Once', completed: false });
+
+    const first = b.commit();
+    // Second call must synchronously see the locked flag — no second network request.
+    await expect(b.commit()).rejects.toThrow(
+      'A write batch can no longer be used after commit() has been called.'
+    );
+    await first;
+  });
+
+  it('rejects set/update/delete issued while a commit is in-flight', async () => {
+    const b = batch(db);
+    b.set(['todos', 'in-flight'], { title: 'Seed', completed: false });
+
+    const pending = b.commit();
+    expect(() => b.set(['todos', 'late-set'], { title: 'Late', completed: false })).toThrow();
+    expect(() => b.update(['todos', 'in-flight'], { completed: true })).toThrow();
+    expect(() => b.delete(['todos', 'in-flight'])).toThrow();
+    await pending;
+  });
+
+  it('can be retried after a failed commit', async () => {
+    const b = batch(db);
+    // Update on a missing doc causes the first commit to fail.
+    b.update(['todos', 'never-existed'], { completed: true });
+    await expect(b.commit()).rejects.toThrow();
+
+    // Retrying the same (still-failing) batch surfaces the original error,
+    // not the "already committed" guard.
+    await expect(b.commit()).rejects.not.toThrow(
+      'A write batch can no longer be used after commit() has been called.'
+    );
+  });
+
+  it('locks permanently after a successful commit', async () => {
+    const b = batch(db);
+    b.set(['todos', 'terminal'], { title: 'Done', completed: false });
+    await b.commit();
+
+    await expect(b.commit()).rejects.toThrow(
+      'A write batch can no longer be used after commit() has been called.'
+    );
+    expect(() => b.set(['todos', 'post-success'], { title: 'X', completed: false })).toThrow();
+  });
+
   it('does not write to Firestore before commit is called', async () => {
     const seed = batch(db);
     seed.set(['todos', 'pre-commit'], { title: 'Original', completed: false });

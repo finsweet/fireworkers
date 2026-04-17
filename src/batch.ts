@@ -14,12 +14,13 @@ import { get_firestore_endpoint } from './utils';
 export const batch = ({ jwt, project_id }: Firestore.DB) => {
   const writes: Firestore.Write[] = [];
   let committed = false;
+  let committing = false;
 
   const get_document_path = (...paths: string[]) =>
     `projects/${project_id}/databases/(default)/documents/${paths.join('/')}`;
 
   const assert_not_committed = () => {
-    if (committed)
+    if (committed || committing)
       throw new Error('A write batch can no longer be used after commit() has been called.');
   };
 
@@ -93,25 +94,30 @@ export const batch = ({ jwt, project_id }: Firestore.DB) => {
      */
     async commit(): Promise<Firestore.CommitResponse> {
       assert_not_committed();
+      committing = true;
 
       const endpoint = get_firestore_endpoint(project_id, [], ':commit');
 
       const body: Firestore.CommitRequest = { writes };
 
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      });
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if ('error' in data) throw new Error(data.error.message);
+        if ('error' in data) throw new Error(data.error.message);
 
-      committed = true;
-      return data as Firestore.CommitResponse;
+        committed = true;
+        return data as Firestore.CommitResponse;
+      } finally {
+        committing = false;
+      }
     },
   };
 };
