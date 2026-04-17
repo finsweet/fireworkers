@@ -1,5 +1,11 @@
 # fireworkers
 
+## 0.5.0
+
+### Minor Changes
+
+- 7c8bc38: feat: add batch write operations and unit test suite
+
 ## 0.4.2
 
 ### Patch Changes
