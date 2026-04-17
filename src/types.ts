@@ -155,3 +155,23 @@ export interface Status {
   message?: string;
   status?: string;
 }
+
+export interface Write {
+  update?: Document;
+  delete?: string;
+  updateMask?: { fieldPaths?: string[] };
+  currentDocument?: { exists?: boolean; updateTime?: Timestamp };
+}
+
+export interface CommitRequest {
+  writes?: Write[];
+}
+
+export interface CommitResponse {
+  writeResults?: WriteResult[];
+  commitTime?: Timestamp;
+}
+
+export interface WriteResult {
+  updateTime?: Timestamp;
+}

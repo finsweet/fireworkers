@@ -14,9 +14,17 @@ export const get_firestore_endpoint = (
   const allPaths = ['v1', 'projects', project_id, 'databases', '(default)', 'documents', ...paths];
   const path = allPaths.join('/') + suffix;
 
-  const endpoint = new URL(FIRESTORE_ENDPOINT);
+  // Support the Firebase Emulator Suite via the FIRESTORE_EMULATOR_HOST env var.
+  // Accessed via globalThis to remain compatible with runtimes that lack `process` (e.g. Cloudflare Workers).
+  const proc = (globalThis as Record<string, unknown>)['process'] as
+    | { env?: Record<string, string | undefined> }
+    | undefined;
+  const emulator_host = proc?.env?.FIRESTORE_EMULATOR_HOST;
+  const base = emulator_host ? `http://${emulator_host}` : FIRESTORE_ENDPOINT;
 
-  // We assign the pathname after instanciating the URL to ensure any hashes are encoded as part of the patname.
+  const endpoint = new URL(base);
+
+  // We assign the pathname after instantiating the URL to ensure any hashes are encoded as part of the pathname.
   // This is done to support use cases where users have hashes in their document IDs.
   endpoint.pathname = path;
 
