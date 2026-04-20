@@ -70,5 +70,13 @@
   "dependencies": {
     "jose": "^6.2.2",
     "superstruct": "^2.0.2"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "@finsweet/eslint-config>eslint-plugin-simple-import-sort": "13.x",
+        "@finsweet/eslint-config>typescript": "6.x"
+      }
+    }
   }
 }
