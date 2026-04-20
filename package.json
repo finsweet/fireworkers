@@ -60,23 +60,15 @@
     "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
-    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "firebase-tools": "15.15.0",
     "prettier": "^3.8.3",
-    "typescript": "^6.0.3",
+    "typescript": "^5.9.3",
     "typescript-eslint": "^8.58.2",
     "vitest": "4.1.4"
   },
   "dependencies": {
     "jose": "^6.2.2",
     "superstruct": "^2.0.2"
-  },
-  "pnpm": {
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "@finsweet/eslint-config>eslint-plugin-simple-import-sort": "13.x",
-        "@finsweet/eslint-config>typescript": "6.x"
-      }
-    }
   }
 }
