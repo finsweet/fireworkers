@@ -14,7 +14,10 @@ import type * as Firestore from './types';
  * Types
  */
 export type PrimitiveValues = Omit<Firestore.Value, 'mapValue' | 'arrayValue'>;
-export type PrimitiveMappedValue = PrimitiveValues[keyof PrimitiveValues];
+export type PrimitiveMappedValue = Exclude<
+  PrimitiveValues[keyof PrimitiveValues],
+  Firestore.ValueNullValue
+> | null;
 export type ArrayMappedValue = Array<PrimitiveMappedValue | ArrayMappedValue | MapMappedValue>;
 export interface MapMappedValue {
   [key: string]: PrimitiveMappedValue | MapMappedValue | ArrayMappedValue;
@@ -115,8 +118,22 @@ const extract_value = (value: Firestore.Value): MappedValue => {
  * Extracts a primitive value from a field object.
  * @param primitiveValues
  */
-const extract_primitive_value = (primitiveValues: PrimitiveValues) =>
-  Object.values(primitiveValues)[0];
+const extract_primitive_value = (primitiveValues: PrimitiveValues) => {
+  const entry = Object.entries(primitiveValues)[0];
+  if (!entry) return undefined;
+
+  const [key, value] = entry;
+
+  // Firestore's REST API returns integerValue as a string to preserve int64
+  // precision. Coerce to number to match the Firebase Admin SDK behavior.
+  if (key === 'integerValue') return Number(value);
+
+  // Firestore's REST API returns nullValue as the sentinel string 'NULL_VALUE'.
+  // Coerce to actual null to match the Firebase Admin SDK behavior.
+  if (key === 'nullValue') return null;
+
+  return value;
+};
 
 /**
  * Extracts an array field.
