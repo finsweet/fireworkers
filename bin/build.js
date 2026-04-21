@@ -1,9 +1,9 @@
-import { exec } from 'child_process';
+import { execSync } from 'child_process';
 import { build } from 'esbuild';
 
 const entryPoints = ['src/index.ts'];
 
-build({
+await build({
   entryPoints,
   logLevel: 'info',
   bundle: true,
@@ -12,4 +12,6 @@ build({
   format: 'esm',
 });
 
-exec(`tsc --emitDeclarationOnly --declaration --project tsconfig.build.json`);
+execSync('tsc --emitDeclarationOnly --declaration --project tsconfig.build.json', {
+  stdio: 'inherit',
+});

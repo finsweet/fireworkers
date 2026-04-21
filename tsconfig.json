@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "declaration": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "outDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
