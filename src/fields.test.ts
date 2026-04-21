@@ -103,7 +103,7 @@ describe('extract_fields_from_document', () => {
   });
 });
 
-describe('get with integerValue seeded via raw REST (emulator)', () => {
+describe('get with primitive sentinels seeded via raw REST (emulator)', () => {
   let db: DB;
 
   beforeAll(async () => {
@@ -111,17 +111,19 @@ describe('get with integerValue seeded via raw REST (emulator)', () => {
   });
   beforeEach(clearFirestore);
 
-  it('returns integerValue fields as JS numbers', async () => {
+  it('returns integerValue fields as JS numbers and nullValue fields as null', async () => {
     await writeRawDocument('todos', 'seeded', {
       updatedTimestamp: { integerValue: '1730404244' },
       count: { integerValue: '42' },
       title: { stringValue: 'seeded externally' },
+      missing: { nullValue: 'NULL_VALUE' },
     });
 
     const doc = await get<{
       updatedTimestamp: number;
       count: number;
       title: string;
+      missing: null;
     }>(db, 'todos', 'seeded');
 
     expect(doc.fields.updatedTimestamp).toBe(1730404244);
@@ -129,5 +131,6 @@ describe('get with integerValue seeded via raw REST (emulator)', () => {
     expect(doc.fields.count).toBe(42);
     expect(typeof doc.fields.count).toBe('number');
     expect(doc.fields.title).toBe('seeded externally');
+    expect(doc.fields.missing).toBeNull();
   });
 });
