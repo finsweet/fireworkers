@@ -69,7 +69,7 @@ describe('extract_fields_from_document', () => {
     expect(extracted.fields.double).toBe(3.14);
     expect(extracted.fields.str).toBe('hello');
     expect(extracted.fields.bool).toBe(true);
-    expect(extracted.fields.missing).toBe('NULL_VALUE');
+    expect(extracted.fields.missing).toBeNull();
   });
 
   it('coerces integerValue nested inside arrayValue and mapValue', () => {
