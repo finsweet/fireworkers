@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { safe_fetch, throw_if_error } from './error';
 import { create_document_from_fields } from './fields';
 import type * as Firestore from './types';
 import { get_firestore_endpoint } from './utils';
@@ -101,7 +102,7 @@ export const batch = ({ jwt, project_id }: Firestore.DB) => {
       const body: Firestore.CommitRequest = { writes };
 
       try {
-        const response = await fetch(endpoint, {
+        const response = await safe_fetch(endpoint, {
           method: 'POST',
           body: JSON.stringify(body),
           headers: {
@@ -111,10 +112,10 @@ export const batch = ({ jwt, project_id }: Firestore.DB) => {
 
         const data = await response.json();
 
-        if ('error' in data) throw new Error(data.error.message);
+        throw_if_error<Firestore.CommitResponse>(data);
 
         committed = true;
-        return data as Firestore.CommitResponse;
+        return data;
       } finally {
         committing = false;
       }

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { safe_fetch, throw_if_error } from './error';
 import { extract_fields_from_document } from './fields';
 import type * as Firestore from './types';
 import { get_firestore_endpoint } from './utils';
@@ -35,7 +36,7 @@ export const query = async <Fields extends Record<string, any>>(
     structuredQuery: query,
   };
 
-  const response = await fetch(endpoint, {
+  const response = await safe_fetch(endpoint, {
     method: 'POST',
     body: JSON.stringify(payload),
     headers: {
@@ -43,7 +44,8 @@ export const query = async <Fields extends Record<string, any>>(
     },
   });
 
-  const data: RunQueryResponse = await response.json();
+  const data: RunQueryResponse | { error: Firestore.Status } = await response.json();
+  throw_if_error<RunQueryResponse>(data);
 
   const documents = data.reduce<Firestore.CustomDocument<Fields>[]>((acc, { document }) => {
     if (!document) return acc;

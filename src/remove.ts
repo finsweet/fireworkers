@@ -1,3 +1,4 @@
+import { safe_fetch, throw_if_error } from './error';
 import type * as Firestore from './types';
 import { get_firestore_endpoint } from './utils';
 
@@ -13,12 +14,17 @@ import { get_firestore_endpoint } from './utils';
 export const remove = async ({ jwt, project_id }: Firestore.DB, ...paths: string[]) => {
   const endpoint = get_firestore_endpoint(project_id, paths);
 
-  const response = await fetch(endpoint, {
+  const response = await safe_fetch(endpoint, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${jwt}`,
     },
   });
 
-  return response.ok;
+  if (!response.ok) {
+    const data = await response.json();
+    throw_if_error(data);
+  }
+
+  return true;
 };
