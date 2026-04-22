@@ -1,4 +1,4 @@
-import { safe_fetch, throw_if_error } from './error';
+import { FirestoreError, safe_fetch, throw_if_error } from './error';
 import type * as Firestore from './types';
 import { get_firestore_endpoint } from './utils';
 
@@ -22,8 +22,13 @@ export const remove = async ({ jwt, project_id }: Firestore.DB, ...paths: string
   });
 
   if (!response.ok) {
-    const data = await response.json();
+    const data = await response.json().catch(() => null);
     throw_if_error(data);
+    throw new FirestoreError({
+      code: 'unknown',
+      message: `Firestore delete failed with HTTP ${response.status}`,
+      httpCode: response.status,
+    });
   }
 
   return true;

@@ -1,8 +1,8 @@
-import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { clearFirestore, initDb } from '../tests/unit/helpers';
 import { create } from './create';
-import { FirestoreError, status_to_code } from './error';
+import { FirestoreError, safe_fetch, status_to_code } from './error';
 import { get } from './get';
 import { remove } from './remove';
 import type { DB } from './types';
@@ -101,5 +101,51 @@ describe('status_to_code', () => {
   it('falls back to "unknown" for unrecognized status strings', () => {
     expect(status_to_code('NOT_A_REAL_STATUS')).toBe('unknown');
     expect(status_to_code('')).toBe('unknown');
+  });
+});
+
+describe('safe_fetch', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('wraps network-level fetch rejections in a FirestoreError with code "unavailable"', async () => {
+    vi.spyOn(globalThis, 'fetch').mockRejectedValue(new TypeError('Failed to connect'));
+
+    let caught: unknown;
+    try {
+      await safe_fetch('https://example.invalid');
+    } catch (err) {
+      caught = err;
+    }
+
+    expect(caught).toBeInstanceOf(FirestoreError);
+    const err = caught as FirestoreError;
+    expect(err.code).toBe('unavailable');
+    expect(err.message).toBe('Failed to connect');
+    expect(err.httpCode).toBeUndefined();
+  });
+
+  it('falls back to a generic message when the thrown value is not an Error', async () => {
+    vi.spyOn(globalThis, 'fetch').mockRejectedValue('raw rejection');
+
+    let caught: unknown;
+    try {
+      await safe_fetch('https://example.invalid');
+    } catch (err) {
+      caught = err;
+    }
+
+    expect(caught).toBeInstanceOf(FirestoreError);
+    const err = caught as FirestoreError;
+    expect(err.code).toBe('unavailable');
+    expect(err.message).toBe('Network request failed');
+  });
+
+  it('returns the Response unchanged when fetch resolves', async () => {
+    const response = new Response('ok', { status: 200 });
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(response);
+
+    await expect(safe_fetch('https://example.invalid')).resolves.toBe(response);
   });
 });
