@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { safe_fetch, throw_if_error } from './error';
 import { create_document_from_fields, extract_fields_from_document } from './fields';
 import type * as Firestore from './types';
 import { get_firestore_endpoint } from './utils';
@@ -31,7 +32,7 @@ export const update = async <Fields extends Record<string, any>>(
     endpoint.searchParams.append('updateMask.fieldPaths', key);
   }
 
-  const response = await fetch(endpoint, {
+  const response = await safe_fetch(endpoint, {
     method: 'PATCH',
     body: JSON.stringify(payload),
     headers: {
@@ -41,7 +42,7 @@ export const update = async <Fields extends Record<string, any>>(
 
   const data: Firestore.GetResponse = await response.json();
 
-  if ('error' in data) throw new Error(data.error.message);
+  throw_if_error(data);
 
   const document = extract_fields_from_document<Fields>(data);
   return document;

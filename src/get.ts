@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { safe_fetch, throw_if_error } from './error';
 import { extract_fields_from_document } from './fields';
 import type * as Firestore from './types';
 import { get_firestore_endpoint } from './utils';
@@ -16,7 +17,7 @@ export const get = async <Fields extends Record<string, any>>(
 ) => {
   const endpoint = get_firestore_endpoint(project_id, paths);
 
-  const response = await fetch(endpoint, {
+  const response = await safe_fetch(endpoint, {
     headers: {
       Authorization: `Bearer ${jwt}`,
     },
@@ -24,7 +25,7 @@ export const get = async <Fields extends Record<string, any>>(
 
   const data: Firestore.GetResponse = await response.json();
 
-  if ('error' in data) throw new Error(data.error.message);
+  throw_if_error(data);
 
   const document = extract_fields_from_document<Fields>(data);
   return document;

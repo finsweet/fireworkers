@@ -1,5 +1,6 @@
 export * from './batch';
 export * from './create';
+export { FirestoreError, type FirestoreErrorCode } from './error';
 export * from './get';
 export * from './init';
 export * from './query';

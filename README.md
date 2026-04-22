@@ -339,6 +339,45 @@ const response = await b.commit();
 
 ---
 
+## Error handling
+
+All operations reject with a `FirestoreError` when Firestore returns an error response or the network request fails. `FirestoreError` extends the built-in `Error`, so existing `try/catch` and `.message` checks keep working — but you can now branch on a stable string `code` instead of parsing the message.
+
+```typescript
+import * as Firestore from 'fireworkers';
+
+try {
+  await Firestore.get(db, 'todos', 'missing-id');
+} catch (err) {
+  if (err instanceof Firestore.FirestoreError) {
+    if (err.code === 'not-found') {
+      // handle missing document
+    } else if (err.code === 'permission-denied') {
+      // surface auth failure
+    }
+  }
+  throw err;
+}
+```
+
+### Fields
+
+- `code` — `FirestoreErrorCode` (kebab-cased string, see list below)
+- `message` — the original `error.message` from the Firestore REST response when present, otherwise a generic fallback (`'Unknown Firestore error'`)
+- `status` — the original canonical status string (e.g. `'NOT_FOUND'`), when present
+- `httpCode` — the original numeric HTTP status code from the REST response, when present
+- `name` — always `'FirestoreError'`
+
+Network-level failures (DNS, connection reset, etc.) surface as `FirestoreError` with `code: 'unavailable'`.
+
+### FirestoreErrorCode values
+
+The 16 canonical status codes, kebab-cased — same set the Firebase Web SDK uses:
+
+`cancelled`, `unknown`, `invalid-argument`, `deadline-exceeded`, `not-found`, `already-exists`, `permission-denied`, `resource-exhausted`, `failed-precondition`, `aborted`, `out-of-range`, `unimplemented`, `internal`, `unavailable`, `data-loss`, `unauthenticated`.
+
+---
+
 ## Testing
 
 Unit tests run against the [Firebase Emulator Suite](https://firebase.google.com/docs/emulator-suite) using [Vitest](https://vitest.dev/).
