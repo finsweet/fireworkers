@@ -363,7 +363,7 @@ try {
 ### Fields
 
 - `code` — `FirestoreErrorCode` (kebab-cased string, see list below)
-- `message` — the original `error.message` from the Firestore REST response
+- `message` — the original `error.message` from the Firestore REST response when present, otherwise a generic fallback (`'Unknown Firestore error'`)
 - `status` — the original canonical status string (e.g. `'NOT_FOUND'`), when present
 - `httpCode` — the original numeric HTTP status code from the REST response, when present
 - `name` — always `'FirestoreError'`
