@@ -2,6 +2,7 @@ export * from './batch';
 export * from './create';
 export { FirestoreError, type FirestoreErrorCode } from './error';
 export * from './get';
+export * from './id';
 export * from './init';
 export * from './query';
 export * from './remove';
