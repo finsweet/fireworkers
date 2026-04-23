@@ -339,6 +339,23 @@ const response = await b.commit();
 
 ---
 
+### generateFirestoreId()
+
+Generates a random ID matching Firestore's auto-generated document ID format: 20 characters from `[A-Za-z0-9]`, produced with rejection sampling via `crypto.getRandomValues` to avoid modulo bias. Ported from [`@firebase/firestore`'s `AutoId.newId()`](https://github.com/firebase/firebase-js-sdk/blob/main/packages/firestore/src/util/misc.ts).
+
+Useful when you need to know a document's ID before writing it — for example, to reference it from other documents in the same [`batch`](#batchdb).
+
+```typescript
+const id = Firestore.generateFirestoreId();
+
+const b = Firestore.batch(db);
+b.set(['todos', id], { title: 'Win the lottery', completed: false });
+b.set(['todo-index', id], { createdAt: Date.now() });
+await b.commit();
+```
+
+---
+
 ## Error handling
 
 All operations reject with a `FirestoreError` when Firestore returns an error response or the network request fails. `FirestoreError` extends the built-in `Error`, so existing `try/catch` and `.message` checks keep working — but you can now branch on a stable string `code` instead of parsing the message.
